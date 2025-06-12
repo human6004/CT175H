@@ -1,12 +1,15 @@
 #include <stdio.h>
 #define max 100
-typedef int ElementType;
+
 int mark[max];
+int parent[max];
 typedef struct{
     int n,m;
     int A[max][max];
 }Graph;
-
+typedef struct{
+    int u,p;
+}ElementType;
 typedef struct{
     ElementType data[max];
     int front,rear;
@@ -51,23 +54,39 @@ void add_edge(Graph *pG, int u, int v){
     pG->A[v][u] = 1;
     pG->m++;
 }
+int adjacent(Graph *pG, int u, int v)
+{
+    return pG->A[u][v] > 0;
+}
+
 
 void BFS(Graph *pG, int s){
     Queue Q;
     make_null_queue (&Q);
-    enqueue (&Q,s);
+    
+    ElementType pair;
+    pair.u = s;
+    pair.p = -1;
+    enqueue(&Q,pair);
     while (!empty(&Q)){
-        int u = front (&Q);
+        ElementType pair = front(&Q);
+        int u = pair.u;
+        int p = pair.p;
         dequeue(&Q);
+
         if (mark[u] != 0){
             continue;
         }
-        printf ("%d\n", u);
+        // printf ("%d\n", u);
         mark[u] = 1;
+        parent[u]= p;
         //duyệt các cạnh kề của uu
         for (int v = 1; v <= pG->n; v++){
-            if (pG->A[u][v] > 0){
-                enqueue (&Q,v);
+            if (adjacent(pG,u,v)){
+                ElementType pair;
+                pair.u =v;
+                pair.p =u;
+                enqueue (&Q,pair);
             }
         }
     }
@@ -77,18 +96,28 @@ int main (){
     Graph G;
     int n, m, u, v;
     scanf("%d%d", &n, &m);
+
     init_graph(&G, n);
-	
-    for (int e = 0; e < m; e++) {
+    for (int i = 0; i < m; i++) {
         scanf("%d%d", &u, &v);
         add_edge(&G, u, v);
     }
-    for (int i = 1; i <= G.n; i++)
-    mark[i] = 0;
 
-    BFS(&G, 1);
-    
-    return 0;
+    for (int i = 1; i <= n; i++) {
+        mark[i] = 0;
+        parent[i] = -1;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (mark[i] == 0) {
+            BFS(&G, i);
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        printf("%d %d\n", i, parent[i]);
+    }
+
 }
 
 // 6 6
