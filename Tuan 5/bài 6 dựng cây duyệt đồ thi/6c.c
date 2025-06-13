@@ -82,6 +82,7 @@ void DFS(Graph *pG, int u, int p)
     for (int v = 1; v <= pG->n; v++)
         if (adjacent(pG, u, v) && mark[v] == 0)
             DFS(pG, v, u);
+            
 }
 int main()
 {
