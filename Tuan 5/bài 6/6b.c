@@ -51,7 +51,7 @@ void init_graph (Graph *pG, int n){
 
 void add_edge(Graph *pG, int u, int v){
     pG->A[u][v] = 1;
-    pG->A[v][u] = 1;
+    // pG->A[v][u] = 1;
     pG->m++;
 }
 int adjacent(Graph *pG, int u, int v)
@@ -111,7 +111,6 @@ int main (){
     for (int i = 1; i <= n; i++) {
         if (mark[i] == 0) {
             BFS(&G, i);
-
         }
     }
 
@@ -120,13 +119,16 @@ int main (){
     }
 
 }
+
 /*
+	
+4 3
 2 1
 1 4
 2 4
 
 1 -1
-2 1
+2 -1
 3 -1
 4 1
 */
@@ -136,19 +138,8 @@ int main (){
 4 2
 1 2
 3 4
-
 1 -1
 2 1
 3 -1
 4 3
-*/
-
-/*
-4 2
-1 4
-2 3
-1 -1
-2 -1
-3 2
-4 1
 */
