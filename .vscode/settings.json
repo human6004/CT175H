@@ -2,6 +2,14 @@
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "stdlib.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "array": "c",
+        "any": "c",
+        "string_view": "c",
+        "ranges": "c",
+        "span": "c",
+        "stacktrace": "c",
+        "regex": "c",
+        "type_traits": "c"
     }
 }
