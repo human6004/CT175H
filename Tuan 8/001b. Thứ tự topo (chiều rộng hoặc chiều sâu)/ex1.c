@@ -1,6 +1,5 @@
 #include <stdio.h>
 #define MAX_N 100
-int rank[MAX_N];
 
 //__________LIST___________
 typedef struct
@@ -30,7 +29,6 @@ int element_at(List *pL, int i)
 {
     return pL->data[i-1];
 }
-
 
 //________________QUEUE___________________
 
@@ -122,8 +120,6 @@ void topo_sort(Graph *pG, List *pL)
     // làm rỗng danh sách
     make_null_list(pL);
 
-    for(int u = 1; u< pG->n; u++)
-        rank[u] = 0;
     // vòng lặp chính, lặp đến khi Q rỗng thi dừng
     while (!empty_queue(&Q))
     {
@@ -149,6 +145,7 @@ int main() {
 	int n, m, u, v, e;
 	scanf("%d%d", &n, &m);
 	init_graph(&G, n);
+	
 	for (e = 0; e < m; e++) {
 		scanf("%d%d", &u, &v);
 		add_edge(&G, u, v);
