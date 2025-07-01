@@ -124,6 +124,6 @@ int main()
 
     rank(&G);
     for (int u = 1; u <= n; u++)
-        printf("r[%d] = %d\n", u, r[u]);
+        printf("%d\n",r[u]);
     return 0;
 }

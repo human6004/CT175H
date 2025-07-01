@@ -84,7 +84,7 @@ void rank(Graph *pG)
         if (d[u] == 0)
             push_back(&S1, u);
 
-    int k = 0; // hạng tính từ 0. Tùy theo bài toán có thẻ k = 1
+    int k = 1; // hạng tính từ 0. Tùy theo bài toán có thẻ k = 1
 
     // vòng lặp chính, lặp đến khi S1 rỗng thi dừng
     while (S1.size > 0)
@@ -119,11 +119,13 @@ int main()
     for (e = 0; e < m; e++)
     {
         scanf("%d%d", &u, &v);
-        add_edge(&G, u, v);
+        add_edge(&G, u, v);// ex1 voi ex2 khac cho nay
     }
 
-    rank(&G);
-    for (int u = 1; u <= n; u++)
-        printf("r[%d] = %d\n", u, r[u]);
+	
+	rank(&G);
+	for (int u = 1; u <= n; u++)
+	    printf("%d ", r[u]);
+	
     return 0;
 }
