@@ -3,6 +3,7 @@
 typedef int ElementType;
 int mark[max];
 int nb_u;
+int parent[max];
 typedef struct{
     int n,m;
     int A[max][max];
@@ -27,63 +28,16 @@ void add_edge(Graph *pG, int u, int v){
 int adjacent(Graph *pG, int u, int v){
     return pG->A[u][v] > 0;
 }
-
-typedef struct{
-    ElementType data[max];
-    int top_idx;
-}Stack;
-
-//kkhởi tạo hàm rỗng
-void make_null_stack(Stack *pS){
-    pS->top_idx = -1;
-}
-
-//thêm phần tử u vào đỉnh ngăn xếp
-void push(Stack *pS, ElementType u){
-    pS->top_idx++;
-    pS->data[pS->top_idx] = u;
-}
-
-//xem phần từ trên đầu đỉnh ngăn xếp
-ElementType top(Stack *pS){
-    return pS->data[pS->top_idx];
-}
-
-//xóa phần tử trên đỉnh ngăn xếp
-void pop(Stack *pS){
-    pS->top_idx--;
-}
-
-// kiểm tra ngăn xếp rỗng 
-int empty(Stack *pS){
-    return pS->top_idx == -1;
-}
-
-//duyệt đồ thị theo chiềuu sâu
-void DFS(Graph *pG, int s){
-    Stack S;
-    make_null_stack(&S);
-
-    //đưa s vào S, bắt đầu duyệt từ đỉnh s
-    push(&S, s);
-
-    //vòng lặp chính dùng để duyệt
-    while (!empty(&S)){
-        //3a lấy phần tử trên đỉnh S ra
-        int u = top(&S);
-        pop(&S);
-        if(mark[u] != 0)// đã duyệt qua u rồi bỏ qua
-            continue;
-        // printf("%d\n",u);
-        mark[u] = 1;// đánh dấu đã duyệt
-        nb_u ++;
-
-        //3b xét các đỉnh kề của u, đưa vào trong stack
-        for(int v=1; v <= pG->n; v++){
-            if(adjacent(pG,u,v)&& mark[v] == 0)
-                push(&S,v);
-        }
+//duyệt đồ thị theo chiều sau
+void DFS(Graph *pG, int u, int p){
+    mark[u]=1;
+    parent[u]=p;
+    nb_u++;
+    for(int v = 1; v <= pG->n; v++){
+        if(adjacent(pG,u,v) && mark[v]==0 )
+        DFS(pG,v,u);
     }
+    
 }
 int main (){
     Graph G;
@@ -102,7 +56,7 @@ int main (){
     nb_u =0;
     int s;
     scanf("%d",&s);
-    DFS(&G,s);
+    DFS(&G,s,-1);
     printf("%d",nb_u);
     return 0;
 }
